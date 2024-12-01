@@ -13,7 +13,8 @@ about:
     - icon: inbox-fill
       text: Email
       url: "mailto:yechenc@g.ucla.edu"
-
+    - text: Latex Resume
+      url: "resume.pdf"
 ---
 
 With a strong foundation in statistics, I specialize in data analysis and programming, proficient in Python, RStudio, and Java. My technical expertise is complemented by experience in Microsoft Office, which I use for effective data-driven decision-making and project management. Alongside my technical skills, I’ve developed a deep understanding of human behavior and business strategy through courses in psychology and business, as well as hands-on experience in HR, Marketing and Sales, where I gained insights into talent management and organizational dynamics.
