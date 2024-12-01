@@ -1,30 +1,37 @@
 ---
 title: "Yechen (Gaga) Cao"
 about:
-  template: jolla
-  image: profile.jpg
-  links:
+ template: jolla
+ image: profile.jpg
+ links:
     - icon: Linkedin
       text: Linkedin
       href: https://www.linkedin.com/in/yechen-cao-a5baab250/
     - icon: github
       text: Github
       href: https://github.com/gagacaow
-    - text: Email
+    - icon: inbox-fill
+      text: Email
       url: "mailto:yechenc@g.ucla.edu"
-      icon: inbox-fill
+
 ---
 
 With a strong foundation in statistics, I specialize in data analysis and programming, proficient in Python, RStudio, and Java. My technical expertise is complemented by experience in Microsoft Office, which I use for effective data-driven decision-making and project management. Alongside my technical skills, I’ve developed a deep understanding of human behavior and business strategy through courses in psychology and business, as well as hands-on experience in HR, Marketing and Sales, where I gained insights into talent management and organizational dynamics.
 
 Passionate about blending technology and creativity, I aspire to make a meaningful impact in the industry, using my skills to help bring ideas to life and create memorable experiences.
 
+**This is my detailed** [CV](/cv.pdf)
+
+
+<br>
 
 ## Education
 
 **University of California, Los Angeles**  
 *B.A.  Statistics and Data Science*     &nbsp;&nbsp;     |  &nbsp;&nbsp; March 2025
 
+
+<br>
 
 ## Experience
 

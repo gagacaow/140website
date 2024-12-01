@@ -1,0 +1,7 @@
+---
+title: "Immediate Effects of Alcoholic Drinks on Memory" 
+---
+
+This research investigates the immediate effects of different alcoholic drinks on memory performance, specifically focusing on three beverages: Beer Regular, Guinness, and Red Wine. Utilizing a Latin Square design, the study considers age and Body Mass Index (BMI) as blocking factors to mitigate variability. Ninety participants were randomly selected from three islands and divided into age groups ([21, 31), [31, 41), and [41, 51)) and BMI categories ([0, 19.5), [19.5, 22.5), [22.5, ∞)). Memory performance was measured before and after the consumption of 250 mL of the assigned alcoholic drink. Analysis of Variance (ANOVA) was used to assess the impact of the beverages on memory scores. The findings indicate no significant difference in memory performance across the different alcoholic drinks, suggesting that the type of alcoholic beverage consumed does not differentially affect immediate memory recall.
+
+**This is my team's reports for the** [Analysis](/project/stats101bfinalprojectreport.pdf)

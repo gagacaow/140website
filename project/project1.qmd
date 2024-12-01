@@ -1,0 +1,12 @@
+---
+title: "Data Analysis of Life Expectancy in 2007" 
+---
+
+
+As we are experiencing a better lifestyle now, we do care more about how well we can maintain that quality of life and how long we can live to enjoy our lives. For this project, we want to study how the status of developed/developing countries, BMI, alcohol consumption, general government expenditure on health, thinness among children and adolescents for Age 10 to 19, and Hepatitis B coverage affected the life expectancy in 2007 to understand different factors contributing to health problems globally. 
+
+The dataset originates from the Global Health Observatory (GHO) data repository, under the auspices of the World Health Organization (WHO), a research project conducted from 2000 to 2015 across 193 countries. The choice to focus on data from the year 2007 was strategic, as it contains the fewest missing values (NAs) and may offer a more comprehensive and reliable basis for analysis within the specified timeframe. 
+
+This report looks closely at the basic setup of the raw data, providing a detailed analysis of both full models and transformed models. It evaluates the goodness of fit across various variance selection methods to identify the most suitable final model to explain our dataset. Finally, we'll discuss how we can use our findings in real life situations and their limitations.
+
+**This is my team's report for the** [Analysis](/project/stats101sfinalreport.pdf)

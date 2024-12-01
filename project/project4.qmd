@@ -1,0 +1,12 @@
+---
+title: "2020 Presidential Election"
+---
+
+This report explains the process of constructing classification models for a train dataset through supervised learning. The dataset used in this study is retrieved from Kaggle, for which the data of the election winner of each county where demographic information is recorded. The demographic information is estimated by the U.S Census Bureau. The dataset contains four files: train_class.csv, test_class.csv, col_descriptions.txt, and sample_submission.csv. For the purpose of this specific study, we use the train_class.csv and test_class.csv and modify them accordingly in the process of building the final classification model.
+
+The objective of this study is to build a model such that it will predict the winner of a county, based on various predictors. According to the col_description.txt, we select the predictor columns that include distinct age levels, racial composition, and education level with statistical significance to our prediction.
+
+**This is my team's report for the** [Classification Model](/project/ElectionClassificationReport.pdf)
+
+**This is the code for the** [stacking model](/project/code/classification.qmd)
+

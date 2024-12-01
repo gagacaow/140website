@@ -1,0 +1,9 @@
+---
+title: "Amazon Order Survey"
+---
+
+This report explains the process of constructing regression models for a train dataset through supervised learning. The dataset used in this study is retrieved from Kaggle, for which the data come from a survey conducted on approximately 5000 randomly selected Amazon customers from January 2018 to December 2022. The dataset contains eight files: train.csv, test.csv, customer_info_test, customer_info_train, amazon_order_details_test, amazon_order_details_train, data_descriptions.txt, and sample_submission.csv. For the purpose of this specific study, we use the train.csv and test.csv and modify them accordingly in the process of building the final regression model.
+
+The objective of this study is to build a model such that it will predict the variable log_total, that addresses the skewness in the variable order_totals (calculated by totaling the cost of items in the amazon_order_details files) by taking log-base 10, based on various predictors. According to the data_description.txt, we select the predictor columns that include distinct age levels, income levels, and how many people are using the same account levels with statistical significance to our prediction
+
+**This is my team's report for the** [Regression Model](/project/AmazonOrderReport.pdf) 

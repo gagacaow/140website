@@ -1,0 +1,586 @@
+
+---
+title: "Code Display"
+execute:
+  eval: false  # Disable execution for this file only
+---
+
+
+```{r}
+# load all required packages 
+library(ROSE)
+library(ISLR)
+library(caret)
+library(kernlab)
+library(tidymodels)
+library(tidyverse)
+library(tune)
+library(dials)
+library(ranger)
+library(workflows)
+library(rsample)
+library(yardstick)
+library(kknn)
+library(lattice)
+library(stacks)
+tidymodels_prefer()
+
+# load the original training data 
+train <- read_csv('train_class.csv',show_col_types = FALSE)
+
+# delete the id, name and total_population to remove non-predictors and ovoid overfitting.  
+train <- train %>% 
+  select(-id, -name, -x0001e)
+
+#create recipe from training data 
+vote_recipe1 <- recipe(winner ~ . , data = train) %>%
+  step_impute_mean(all_numeric_predictors(), -all_outcomes()) %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+
+# set engine and mode for rain forest 
+rf_initial_model <- rand_forest(trees = 100) %>%
+  set_engine('ranger', importance = 'impurity') %>%
+  set_mode('classification')
+
+# Workflow to fit initial model
+initial_rf_wkfl <- workflow() %>%
+  add_model(rf_initial_model) %>%
+  add_recipe(vote_recipe1)
+
+# Fit model to get feature importance
+set.seed(100)
+initial_fit <- fit(initial_rf_wkfl, data = train)
+
+# Extracting feature importance
+importance_df <- vip::vi(initial_fit, method = "model")
+# Check the structure of importance_df
+print(str(importance_df))
+
+#select the top 20 important predictors
+top_features <- importance_df$Variable[1:20]
+
+# select only the response variable and top 20 predictors 
+train <- train %>%
+  select(winner, all_of(top_features))
+
+#load the test data 
+test <- read_csv('test_class.csv')
+
+# select only the id column and the top 20 predictors from training 
+test <- test %>%
+  select(id, all_of(top_features))
+
+# set up cvfolds with v = 10
+set.seed(100)
+folds <- vfold_cv(train,v=10)
+
+
+## model1 
+
+# Update recipe to include only the top features
+vote_recipe <- recipe(winner ~ . , data = train) %>%
+  step_impute_mean(all_numeric_predictors(), -all_outcomes()) %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+
+#create the new model with ranger and classification 
+rf_model1 <- rand_forest() %>%
+  set_engine('ranger')%>%
+  set_mode('classification')
+
+
+# Update the workflow with the refined recipe
+rf_wkfl1 <- workflow() %>%
+  add_model(rf_model1)%>%
+  add_recipe(vote_recipe)
+
+#Convert 
+
+#update random forest model with mtry, min_m and trees 
+rf_model1 <- rand_forest(
+  mtry = tune(),     
+  min_n = tune(),    
+  trees = 1000      
+) %>%
+  set_engine("ranger") %>%
+  set_mode("classification")
+
+#update workflow with tuning model
+rf_tune_wkfl1 <- rf_wkfl1 %>%
+  update_model(rf_model1)
+
+#set up tuning parameters 
+rf_params1 <- parameters(
+  mtry(range = c(1, ncol(train) - 1)),
+  min_n(range = c(1, 10))
+)
+
+# Set up Bayesian Optimization
+bayes_opt1 <- tune_bayes(
+  rf_model1,
+  vote_recipe,
+  resamples = vfold_cv(train, v = 5),
+  param_info = rf_params1,
+  initial = 10,  
+  iter = 20,     
+  metrics = metric_set(roc_auc, accuracy)
+)
+#check the model results 
+bayes_opt1 %>%
+  collect_metrics()
+
+#select the best model based on their roc_auc results 
+best_params1 <- select_best(bayes_opt1, metric = "roc_auc")
+
+#create final workflow with the best model
+final_rf_wkfl1 <- rf_tune_wkfl1 %>%
+  finalize_workflow(best_params1)
+final_rf_wkfl1
+
+#resample the model with the newest workflow and folds
+set.seed(100)
+final_rf_res1 <- fit_resamples(
+  final_rf_wkfl1,
+  resamples =folds,
+  metrics = metric_set(accuracy,roc_auc),control=control_resamples(save_workflow = TRUE)
+)
+
+collect_metrics(final_rf_res1)
+
+# fit the training data to the workflow 
+final_rf_fit1 <-final_rf_wkfl1 %>%
+  fit(data=train)
+
+#make predictions based on the model 
+rf_predictions1 <- final_rf_fit1 %>%
+  predict(new_data=test)
+
+#create results table 
+results_rf1 <- test %>%
+  select(id) %>%
+  bind_cols(rf_predictions1)%>%
+  rename(id = id, winner = .pred_class)
+
+head(results_rf1,15)
+
+#output results 
+write_csv(results_rf1,'rf_bayes_class_original_top20_final.csv')
+
+rm(list = ls())
+
+
+## model2 stacking
+
+# load all required packages 
+library(ROSE)
+library(ISLR)
+library(caret)
+library(kernlab)
+library(tidymodels)
+library(tidyverse)
+library(tune)
+library(dials)
+library(ranger)
+library(workflows)
+library(rsample)
+library(yardstick)
+library(kknn)
+library(lattice)
+library(stacks)
+tidymodels_prefer()
+
+# load the original training data 
+train <- read_csv('train_class.csv',show_col_types = FALSE)
+
+# delete the id, name and total_population to remove non-predictors and ovoid overfitting.  
+train <- train %>% 
+  select(-id, -name, -x0001e)
+
+#create recipe from training data 
+vote_recipe1 <- recipe(winner ~ . , data = train) %>%
+  step_impute_mean(all_numeric_predictors(), -all_outcomes()) %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+
+# set engine and mode for rain forest 
+rf_initial_model <- rand_forest(trees = 100) %>%
+  set_engine('ranger', importance = 'impurity') %>%
+  set_mode('classification')
+
+# Workflow to fit initial model
+initial_rf_wkfl <- workflow() %>%
+  add_model(rf_initial_model) %>%
+  add_recipe(vote_recipe1)
+
+# Fit model to get feature importance
+set.seed(100)
+initial_fit <- fit(initial_rf_wkfl, data = train)
+
+# Extracting feature importance
+importance_df <- vip::vi(initial_fit, method = "model")
+# Check the structure of importance_df
+print(str(importance_df))
+
+#select the top 20 important predictors
+top_features <- importance_df$Variable[1:20]
+
+# select only the response variable and top 20 predictors 
+train <- train %>%
+  select(winner, all_of(top_features))
+
+#load the test data 
+test <- read_csv('test_class.csv')
+
+# select only the id column and the top 20 predictors from training 
+test <- test %>%
+  select(id, all_of(top_features))
+
+# set up cvfolds with v = 10
+set.seed(100)
+folds <- vfold_cv(train,v=10, repeats = 3)
+
+# Set control for tuning
+ctrl_grid <- control_stack_grid()
+
+# Set up resampling
+set.seed(100)
+cv_folds <- vfold_cv(train, v = 10, repeats = 3)
+
+# Update recipe to include only the top features
+vote_recipe <- recipe(winner ~ . , data = train) %>%
+  step_impute_mean(all_numeric_predictors(), -all_outcomes()) %>%
+  step_normalize(all_numeric_predictors()) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+
+# create random forest model 
+rf_model <- rand_forest() %>%
+  set_engine('ranger')%>%
+  set_mode('classification')
+
+
+# Update the workflow with the refined recipe
+rf_wkfl <- workflow() %>%
+  add_model(rf_model)%>%
+  add_recipe(vote_recipe)
+
+#update model with tuning parameters mtry, min_n, trees  
+rf_tune_model <- rand_forest(
+  mtry = tune(),     # Indicate tuning
+  min_n = tune(),    # Indicate tuning
+  trees = 1000       # Fixed number of trees
+) %>%
+  set_engine("ranger") %>%
+  set_mode("classification")
+
+#update workflow with tuning model 
+rf_tune_wkfl <- rf_wkfl %>%
+  update_model(rf_tune_model)
+
+#set up tuning parameters 
+rf_params <- parameters(
+  mtry(range = c(1, ncol(train) - 1)),
+  min_n(range = c(1, 10))
+)
+
+# Set up Bayesian Optimization
+bayes_opt <- tune_bayes(
+  rf_tune_model,
+  vote_recipe,
+  resamples = vfold_cv(train, v = 5),
+  param_info = rf_params,
+  initial = 10,  # Number of randomly selected points to evaluate before the Bayesian optimization starts
+  iter = 20,     # Number of iterations of Bayesian optimization
+  metrics = metric_set(roc_auc, accuracy)
+)
+
+bayes_opt %>%
+  collect_metrics()
+
+#select the best model based on roc_auc 
+best_params <- select_best(bayes_opt, metric = "roc_auc")
+
+#update workflow with the selected model 
+final_rf_wkfl <- rf_tune_wkfl %>%
+  finalize_workflow(best_params)
+final_rf_wkfl
+
+# resample the final workflow with folds 
+set.seed(100)
+folds <- vfold_cv(train,v=10)
+
+final_rf_res <- fit_resamples(
+  final_rf_wkfl,
+  resamples =folds,
+  metrics = metric_set(accuracy,roc_auc),control=control_resamples(save_workflow = TRUE)
+)
+
+## random forest 2
+
+#set up second random forest model 
+rf_model2 <- rand_forest() %>%
+  set_engine('ranger')%>%
+  set_mode('classification')
+
+# Update the workflow with the refined recipe
+rf_wkfl2 <- workflow() %>%
+  add_model(rf_model2)%>%
+  add_recipe(vote_recipe)
+
+#update the second model with tuning parameters mtry, trees, min_n
+rf_tune_model2 <- rand_forest(
+  mtry = tune(),
+  trees = tune(),
+  min_n = tune()
+) %>%
+  set_engine('ranger')%>%
+  set_mode('classification')
+
+#update the workflow with tuning model 
+rf_tune_wkfl2 <- rf_wkfl2 %>%
+  update_model(rf_tune_model2)
+
+#set up tuning parameters 
+rf_grid2 <- grid_latin_hypercube(
+  mtry(range = c(1, 5)),
+  trees(range = c(50, 200)),
+  min_n(range = c(1, 10)),
+  size = 20
+)
+
+
+#apply grid tuning 
+rf_tuning2 <- tune_grid(
+  rf_tune_wkfl2,
+  resamples = folds,
+  grid = rf_grid2,
+  metrics = metric_set(accuracy, roc_auc)
+)
+
+rf_tuning2 %>%
+  collect_metrics()
+
+#select the best model with roc_auc results 
+best_rf_model2 <- rf_tuning2 %>%
+  select_best(metric = 'roc_auc')
+
+#update the final workflow with the best model 
+final_rf_wkfl2 <- rf_tune_wkfl2 %>%
+  finalize_workflow(best_rf_model2)
+
+#resample the data with the final workflow and folds 
+set.seed(100)
+final_rf_res2 <- fit_resamples(
+  final_rf_wkfl2,
+  resamples =folds,
+  metrics = metric_set(accuracy,roc_auc),control=control_resamples(save_workflow = TRUE)
+)
+
+
+## Model 3 SVM-rbf with bayes optimization
+
+# Define the SVM model with tuning parameters
+svm_rbf_model <- svm_rbf() %>%
+  set_engine("kernlab") %>%
+  set_mode('classification') %>%
+  set_args(cost = tune(), rbf_sigma = tune())
+
+# Define the recipe
+vote_recipe_svm <- recipe(winner ~ ., data = train) %>%
+  step_impute_mean(all_numeric(), -all_outcomes()) %>%
+  step_normalize(all_numeric()) %>%
+  step_nzv(all_predictors())
+
+# Define the workflow
+svm_rbf_wkfl <- workflow() %>%
+  add_model(svm_rbf_model) %>%
+  add_recipe(vote_recipe_svm)
+
+# Define the parameter set
+svm_param <- extract_parameter_set_dials(svm_rbf_wkfl) %>%
+  update(
+    rbf_sigma = rbf_sigma(range = c(-7, -1)),
+    cost = cost(range = c(-5, 2))
+  )
+
+# Define the initial grid using Latin hypercube
+svm_grid <- grid_latin_hypercube(
+  svm_param,
+  size = 30
+)
+
+# Set seed for reproducibility
+set.seed(100)
+
+# Initial tuning with grid search
+svm_initial <- tune_grid(
+  svm_rbf_wkfl,
+  resamples = folds,
+  grid = svm_grid,
+  metrics = metric_set(accuracy, roc_auc)
+)
+
+# Collect initial metrics
+collect_metrics(svm_initial)
+
+# Bayesian optimization control settings
+ctrl <- control_bayes(verbose = FALSE)
+
+# Bayesian optimization
+set.seed(100)
+svm_bo <- tune_bayes(
+  svm_rbf_wkfl,
+  resamples = folds,
+  metrics = metric_set(accuracy, roc_auc),
+  initial = svm_initial,
+  param_info = svm_param,
+  iter = 25,
+  control = ctrl
+)
+
+# Display best results
+svm_bo %>% show_best(metric = 'roc_auc', n = 5)
+
+# Select the best model from Bayesian optimization
+best_bayes <- svm_bo %>% select_best(metric = "roc_auc")
+
+# Finalize the workflow with the best parameters
+final_svm_rbf_wkfl <- finalize_workflow(svm_rbf_wkfl, best_bayes)
+
+# Perform resampling with the final workflow
+set.seed(100)
+
+final_svm_rbf_res <- fit_resamples(
+  final_svm_rbf_wkfl,
+  resamples = folds,
+  metrics = metric_set(accuracy, roc_auc),
+  control=control_stack_resamples()
+)
+
+# Collect final resampling metrics
+collect_metrics(final_svm_rbf_res)
+
+## logistic model 
+
+# Define the logistic regression model with glmnet, suitable for tuning
+logistic_tuned <- logistic_reg(penalty = tune(), mixture = tune()) %>% 
+  set_engine("glmnet") %>% 
+  set_mode("classification")
+
+
+# Combine the recipe and model into a workflow
+workflow_tuned <- workflow() %>%
+  add_model(logistic_tuned) %>%
+  add_recipe(vote_recipe)
+
+# Define a grid of hyperparameters
+penalty_vals <- penalty(range = c(-6, -1), trans = log10_trans()) # Log transformation
+mixture_vals <- mixture()
+
+# Create a regular grid
+tuning_grid <- grid_regular(
+  penalty_vals,
+  mixture_vals,
+  levels = 10
+)
+
+tune_results <- tune_grid(
+  workflow_tuned,
+  resamples = folds,
+  grid = tuning_grid,
+  metrics = metric_set(roc_auc, accuracy)
+)
+
+tune_results %>% collect_metrics()
+
+# Select the best model based on ROC AUC
+best_model3 <- select_best(tune_results, metric = "roc_auc")
+
+# Finalize the workflow with the best model
+final_workflow <- finalize_workflow(workflow_tuned, best_model3)
+
+# Fit the finalized workflow to the resampled training data
+set.seed(100)  # Ensure reproducibility
+final_results <- fit_resamples(
+  final_workflow,
+  resamples = cv_folds,
+  metrics = metric_set(roc_auc, accuracy), 
+  control=control_resamples(save_workflow = TRUE)
+)
+
+
+# stacking 
+
+#set up for model stacking 
+stack_control <- control_resamples(
+  save_pred = TRUE,   
+  save_workflow = TRUE  
+)
+
+set.seed(100)
+# Random Forest Model with bayes tuning resample 
+rf_res1 <- fit_resamples(
+  final_rf_wkfl,
+  resamples =folds,
+  metrics = metric_set(roc_auc),
+  control= stack_control
+)
+#random forest model with grid tuning resample 
+rf_res2 <- fit_resamples(
+  final_rf_wkfl2,
+  resamples =folds,
+  metrics = metric_set(roc_auc),
+  control=stack_control
+)
+#svm with bayes tuning resample 
+svm_res <- fit_resamples(
+  final_svm_rbf_wkfl,
+  resamples = folds,
+  metrics = metric_set(roc_auc), 
+  control=stack_control
+)
+#logistics model resample 
+log_res <- fit_resamples(
+  final_workflow,
+  resamples = folds,
+  metrics = metric_set(roc_auc), 
+  control=stack_control
+)
+
+
+# Stack the models
+stack <- stacks() %>%
+  add_candidates(rf_res1) %>%
+  add_candidates(rf_res2) %>%
+  add_candidates(log_res) %>%
+  add_candidates(svm_res)
+
+# Blend predictions
+stack <- stack %>%
+  blend_predictions() %>%
+  fit_members()
+
+#check the model by predicting the training data 
+train_predictions <- predict(stack, new_data = train)
+results_df <- train %>%
+  bind_cols(train_predictions)
+
+results_df$winner <- as.factor(results_df$winner)
+results_df$.pred_class <- as.factor(results_df$.pred_class)
+
+# Calculate accuracy
+accuracy_result <- accuracy(data = results_df, truth = "winner", estimate = ".pred_class")
+
+# Print accuracy
+print(accuracy_result)
+
+# predict the test dataset 
+new_prediction <- predict(stack, new_data = test)
+
+results_stack <- test %>%
+  select(id) %>% 
+  bind_cols(new_prediction)
+
+head(results_stack)
+```
+

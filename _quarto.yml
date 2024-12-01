@@ -5,10 +5,13 @@ website:
   title: "My Website"
   navbar:
     right:
-      - href: index.qmd
+      - href: me.qmd
         text: About Me
-      - href: about.qmd
+      - href: project.qmd
         text: Projects
+  page-footer: 
+     right: "&copy; 2024, Yechen Cao"
+
 
 format:
   html:
