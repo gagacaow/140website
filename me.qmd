@@ -12,7 +12,7 @@ about:
       href: https://github.com/gagacaow
     - icon: inbox-fill
       text: Email
-      url: "mailto:yechenc@g.ucla.edu"
+      url: "mailto:gagacaow@gmail.com"
     - text: Latex Resume
       url: "resume.pdf"
 ---
