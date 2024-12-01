@@ -1,17 +1,43 @@
 ---
 title: "Yechen (Gaga) Cao"
+about:
+  template: jolla
+  image: profile.jpg
+  links:
+    - icon: Linkedin
+      text: Linkedin
+      href: https://www.linkedin.com/in/yechen-cao-a5baab250/
+    - icon: github
+      text: Github
+      href: https://github.com/gagacaow
+    - text: Email
+      url: "mailto:yechenc@g.ucla.edu"
+      icon: inbox-fill
 ---
 
-This is a Quarto website.
+With a strong foundation in statistics, I specialize in data analysis and programming, proficient in Python, RStudio, and Java. My technical expertise is complemented by experience in Microsoft Office, which I use for effective data-driven decision-making and project management. Alongside my technical skills, I’ve developed a deep understanding of human behavior and business strategy through courses in psychology and business, as well as hands-on experience in HR, Marketing and Sales, where I gained insights into talent management and organizational dynamics.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 2
-```
+Passionate about blending technology and creativity, I aspire to make a meaningful impact in the industry, using my skills to help bring ideas to life and create memorable experiences.
 
 
-```{r}
-runif(10)
-```
+## Education
+
+**University of California, Los Angeles**  
+*B.A.  Statistics and Data Science*     &nbsp;&nbsp;     |  &nbsp;&nbsp; March 2025
+
+
+## Experience
+
+*Arc'teryx* &nbsp; |&nbsp; Product Guide  &nbsp; |  &nbsp; Nov 2024 - Present
+
+*UCLA Student Affair*  &nbsp; | &nbsp;  Student Marketing and Operation Coordinator  &nbsp; | &nbsp; Oct 2023 - Present
+
+*Downtown Dolls* &nbsp;| &nbsp;  Modelling agent & Event planning  &nbsp;  | &nbsp; Apr 2023 - June 2023 
+
+
+*Bloomage BioTechnology Corporation Limited*  &nbsp; | &nbsp; Brand Marketing &nbsp; | &nbsp;  Jun 2022 - Sept 2022 
+
+*MSC Consulting*  &nbsp; | &nbsp; Marketing &nbsp; | Jan 2022 - Jun 2022
+
+
 

@@ -18,3 +18,5 @@ format:
 
 
 
+execute: 
+  freeze: auto
