@@ -4,7 +4,7 @@
     "href": "project.html",
     "title": "Projects",
     "section": "",
-    "text": "Title\n\n\n\n\n\n\nData Analysis of Life Expectancy in 2007\n\n\n\n\nImmediate Effects of Alcoholic Drinks on Memory\n\n\n\n\nAmazon Order Survey\n\n\n\n\n2020 Presidential Election\n\n\n\n\n\nNo matching items"
+    "text": "Title\n\n\n\n\n\n\nData Analysis of Life Expectancy in 2007\n\n\n\n\nImmediate Effects of Alcoholic Drinks on Memory\n\n\n\n\nAmazon Order Survey\n\n\n\n\n2020 Presidential Election\n\n\n\n\nYoutube Analysis\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "project/project2.html",
@@ -61,5 +61,12 @@
     "title": "Amazon Order Survey",
     "section": "",
     "text": "This report explains the process of constructing regression models for a train dataset through supervised learning. The dataset used in this study is retrieved from Kaggle, for which the data come from a survey conducted on approximately 5000 randomly selected Amazon customers from January 2018 to December 2022. The dataset contains eight files: train.csv, test.csv, customer_info_test, customer_info_train, amazon_order_details_test, amazon_order_details_train, data_descriptions.txt, and sample_submission.csv. For the purpose of this specific study, we use the train.csv and test.csv and modify them accordingly in the process of building the final regression model.\nThe objective of this study is to build a model such that it will predict the variable log_total, that addresses the skewness in the variable order_totals (calculated by totaling the cost of items in the amazon_order_details files) by taking log-base 10, based on various predictors. According to the data_description.txt, we select the predictor columns that include distinct age levels, income levels, and how many people are using the same account levels with statistical significance to our prediction\nThis is my team’s report for the Regression Model"
+  },
+  {
+    "objectID": "project/project5.html",
+    "href": "project/project5.html",
+    "title": "Youtube Analysis",
+    "section": "",
+    "text": "This study investigates the key predictors that determine the likelihood of a YouTube video receiving above-average likes using a dataset of 364 videos. We performed logistic regression with forward selection to create our final model. Our analysis indicated that shares, new subscribers, and watch time are the most significant in predicting the odds of a video receiving above-average likes. The final logistic regression model, after removing outliers, achieved an accuracy of 94.11% with an AIC of 108.17. Conversely, variables such as new comments, day of the week, total views, and interactions between shares/day of the week and new comments/day of the week were not found to significantly increase the likelihood of receiving above-average likes.\nThis is my team’s report for the Youtube"
   }
 ]
