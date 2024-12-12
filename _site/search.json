@@ -21,6 +21,13 @@
     "text": "As we are experiencing a better lifestyle now, we do care more about how well we can maintain that quality of life and how long we can live to enjoy our lives. For this project, we want to study how the status of developed/developing countries, BMI, alcohol consumption, general government expenditure on health, thinness among children and adolescents for Age 10 to 19, and Hepatitis B coverage affected the life expectancy in 2007 to understand different factors contributing to health problems globally.\nThe dataset originates from the Global Health Observatory (GHO) data repository, under the auspices of the World Health Organization (WHO), a research project conducted from 2000 to 2015 across 193 countries. The choice to focus on data from the year 2007 was strategic, as it contains the fewest missing values (NAs) and may offer a more comprehensive and reliable basis for analysis within the specified timeframe.\nThis report looks closely at the basic setup of the raw data, providing a detailed analysis of both full models and transformed models. It evaluates the goodness of fit across various variance selection methods to identify the most suitable final model to explain our dataset. Finally, we’ll discuss how we can use our findings in real life situations and their limitations.\nThis is my team’s report for the Analysis"
   },
   {
+    "objectID": "project/project4.html",
+    "href": "project/project4.html",
+    "title": "2020 Presidential Election",
+    "section": "",
+    "text": "This report explains the process of constructing classification models for a train dataset through supervised learning. The dataset used in this study is retrieved from Kaggle, for which the data of the election winner of each county where demographic information is recorded. The demographic information is estimated by the U.S Census Bureau. The dataset contains four files: train_class.csv, test_class.csv, col_descriptions.txt, and sample_submission.csv. For the purpose of this specific study, we use the train_class.csv and test_class.csv and modify them accordingly in the process of building the final classification model.\nThe objective of this study is to build a model such that it will predict the winner of a county, based on various predictors. According to the col_description.txt, we select the predictor columns that include distinct age levels, racial composition, and education level with statistical significance to our prediction.\nThis is my team’s report for the Classification Model\nThis is the code for the stacking model"
+  },
+  {
     "objectID": "me.html",
     "href": "me.html",
     "title": "Yechen (Gaga) Cao",
@@ -42,11 +49,11 @@
     "text": "Experience\nArc’teryx   |  Product Guide   |   Nov 2024 - Present\nUCLA Student Affair   |   Student Marketing and Operation Coordinator   |   Oct 2023 - Present\nDowntown Dolls  |   Modelling agent & Event planning   |   Apr 2023 - June 2023\nBloomage BioTechnology Corporation Limited   |   Brand Marketing   |   Jun 2022 - Sept 2022\nMSC Consulting   |   Marketing   | Jan 2022 - Jun 2022"
   },
   {
-    "objectID": "project/project4.html",
-    "href": "project/project4.html",
-    "title": "2020 Presidential Election",
+    "objectID": "project/project5.html",
+    "href": "project/project5.html",
+    "title": "Youtube Analysis",
     "section": "",
-    "text": "This report explains the process of constructing classification models for a train dataset through supervised learning. The dataset used in this study is retrieved from Kaggle, for which the data of the election winner of each county where demographic information is recorded. The demographic information is estimated by the U.S Census Bureau. The dataset contains four files: train_class.csv, test_class.csv, col_descriptions.txt, and sample_submission.csv. For the purpose of this specific study, we use the train_class.csv and test_class.csv and modify them accordingly in the process of building the final classification model.\nThe objective of this study is to build a model such that it will predict the winner of a county, based on various predictors. According to the col_description.txt, we select the predictor columns that include distinct age levels, racial composition, and education level with statistical significance to our prediction.\nThis is my team’s report for the Classification Model\nThis is the code for the stacking model"
+    "text": "This study investigates the key predictors that determine the likelihood of a YouTube video receiving above-average likes using a dataset of 364 videos. We performed logistic regression with forward selection to create our final model. Our analysis indicated that shares, new subscribers, and watch time are the most significant in predicting the odds of a video receiving above-average likes. The final logistic regression model, after removing outliers, achieved an accuracy of 94.11% with an AIC of 108.17. Conversely, variables such as new comments, day of the week, total views, and interactions between shares/day of the week and new comments/day of the week were not found to significantly increase the likelihood of receiving above-average likes.\nThis is my team’s report for the Youtube"
   },
   {
     "objectID": "project/code/classification.html",
@@ -61,12 +68,5 @@
     "title": "Amazon Order Survey",
     "section": "",
     "text": "This report explains the process of constructing regression models for a train dataset through supervised learning. The dataset used in this study is retrieved from Kaggle, for which the data come from a survey conducted on approximately 5000 randomly selected Amazon customers from January 2018 to December 2022. The dataset contains eight files: train.csv, test.csv, customer_info_test, customer_info_train, amazon_order_details_test, amazon_order_details_train, data_descriptions.txt, and sample_submission.csv. For the purpose of this specific study, we use the train.csv and test.csv and modify them accordingly in the process of building the final regression model.\nThe objective of this study is to build a model such that it will predict the variable log_total, that addresses the skewness in the variable order_totals (calculated by totaling the cost of items in the amazon_order_details files) by taking log-base 10, based on various predictors. According to the data_description.txt, we select the predictor columns that include distinct age levels, income levels, and how many people are using the same account levels with statistical significance to our prediction\nThis is my team’s report for the Regression Model"
-  },
-  {
-    "objectID": "project/project5.html",
-    "href": "project/project5.html",
-    "title": "Youtube Analysis",
-    "section": "",
-    "text": "This study investigates the key predictors that determine the likelihood of a YouTube video receiving above-average likes using a dataset of 364 videos. We performed logistic regression with forward selection to create our final model. Our analysis indicated that shares, new subscribers, and watch time are the most significant in predicting the odds of a video receiving above-average likes. The final logistic regression model, after removing outliers, achieved an accuracy of 94.11% with an AIC of 108.17. Conversely, variables such as new comments, day of the week, total views, and interactions between shares/day of the week and new comments/day of the week were not found to significantly increase the likelihood of receiving above-average likes.\nThis is my team’s report for the Youtube"
   }
 ]
