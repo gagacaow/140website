@@ -1,13 +1,12 @@
 ---
-title: "Youtube Analysis"
+title: "California Fiscal Health in 2019"
 ---
 
-This study investigates the key predictors that determine the likelihood of a YouTube video receiving above-average likes using a dataset of 364 videos. We performed logistic regression with forward selection to create our final model.       
+Fiscal health refers to the financial stability and sustainability of a government or organization, which are California's local cities in this study. It is an assessment of their ability to manage revenue, control expenses, meet short-term obligations, and fund long-term commitments such as pensions and infrastructure projects. A fiscally healthy city can effectively allocate resources to maintain public services, invest in community development, and adapt to economic fluctuations without compromising its financial future. Conversely, poor fiscal health may indicate risks such as increasing debt, inadequate cash reserves, or an inability to meet obligations, leading to potential disruptions in public services and economic instability.
 
-Our analysis indicated that shares, new subscribers, and watch time are the most significant in predicting the odds of a video receiving above-average likes. The final logistic regression model, after removing outliers, achieved an accuracy of 94.11% with an AIC of 108.17.                
+In this context, the California High-Risk Local Government Agency Audit Program plays a critical role in assessing and monitoring the fiscal health of cities. By using a data-driven approach, the program evaluates several financial metrics, including liquidity (ability to meet immediate cash needs), debt burden (amount owed to creditors), pension obligations (long-term payments owed to retirees), OPEB funding (resources allocated for post-employment benefits) and many more. These variables are summed up into an Overall Points score, which serves as an indicator of each city’s fiscal health and ranking. A lower score suggests better fiscal management and resilience, while higher scores highlight areas requiring potential intervention. This study uses these scores and related metrics to explore fiscal health trends and relationships, focusing on the influence of geographic regions and proximity to wealthier or poorer cities.           
 
-Conversely, variables such as new comments, day of the week, total views, and interactions between shares/day of the week and new comments/day of the week were not found to significantly increase the likelihood of receiving above-average likes.              
-
-**This is my team's report for the** [Youtube](/project/112FinalReport.pdf)
+**This is my team's report for the** [California](/project/Stats140XP.pdf)                           
+**This is the poster I made** [Poster](/project/poster.pdf)
 
 
