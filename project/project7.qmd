@@ -1,0 +1,17 @@
+---
+title: "MLB WAR Predictions"
+---
+
+In Major League Baseball (MLB), evaluating a pitcher’s overall contribution to team success is cen- tral to both game-day strategy and front-office decision-making. Traditional statistics—such as Earned Run Average (ERA) or strikeout totals—capture facets of performance but can overlook a pitcher’s broader impact on team outcomes. By contrast, Wins Above Replacement (WAR) condenses a player’s on-field value into a single number, comparing them against a hypothetical “replacement-level” player. As a result, WAR has emerged as a critical tool for contract negotiations, roster planning, and long-range forecasts of player performance. Accurately predicting WAR, however, remains a significant challenge. A pitcher’s season-long value reflects many interdependent factors, from pitching mechanics and defensive support to game contexts and usage patterns. Recent advancements in tracking technology—such as PitchFx—now provide pitch-by-pitch data, enabling deeper exploration of how specific pitching char- acteristics translate into WAR. Building on this rich data, our study develops predictive models that integrate both game-level and pitch-level metrics to estimate a pitcher’s WAR. We focus on two main objectives:          
+
+1. Current-Season Prediction: Estimating a pitcher’s WAR for the same year, based on that season’s statistics.              
+
+2. Next-Season Forecasting: Projecting WAR for the following year, using prior-season metrics.                 
+
+Through experimentation with multiple modeling techniques (Random Forest, Lasso Regression, and Multiple Linear Regression), we ultimately found that a multiple linear regression model provides the most balanced combination of interpretability and predictive accuracy. Our final model explains over 93% of the variance in pitcher WAR (R-squared is 0.93) with a Root Mean Square Error (RMSE) near 0.37. While forecasting WAR one season ahead naturally introduces more uncertainty, the model still captures essential trends and distributions.              
+
+Initially by examining factors such as strikeouts, home runs allowed, total outs, and a pitcher’s role as a starter or reliever, we aim to identify key statistical drivers of WAR. These findings can help MLB teams better allocate their pitching resources, negotiate contracts, and plan rosters for future seasons. Although no metric can fully encapsulate a pitcher’s total value, our results underscore that combining traditional counting stats with granular pitch-level data yields a more holistic and actionable view of pitcher performance.             
+
+**This is my team's report for the** [MLB](/project/Stat_141XP_MLB.pdf)
+
+
