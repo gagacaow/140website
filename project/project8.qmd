@@ -1,0 +1,15 @@
+---
+title: "Disney Movies Through the Years: A Text-Mining Analysis of Language, Sentiment, and Themes in The Lion King, Up, and Zootopia"
+---
+
+
+We grew up with Disney animated films and always have special feelings for Disney stories full of magic and wonder. Disney movies enriched our childhood and shaped our understanding of kindness, courage, and love. As time passes, we can see noticeable changes in the characters, stage designs, and even songs of Disney movies. This evolution reflects Disney’s commitment to staying relevant to contemporary audiences, adapting narratives to suit their tastes. As Disney movie enthusiasts with text analysis skills, we want to know how Disney’s content style has changed. Our research question is: how have the language usage, sentiment expression, and thematic focus in Disney animated movies evolved? We will compare the similarities and differences between different movies through word, sentiment, and topic analysis. We believe that the comparative analysis can provide valuable insights into Disney’s evolving narrative techniques and their impact on different audiences. From this study, we aim to enhance our appreciation of the art and depth of Disney films.       
+
+We chose to conduct a text-mining study of three productions from different periods: The Lion King (1994), Up (2009), and Zootopia (2016). We found the scripts of these three movies online, including environmental descriptions and third-person narration, which are about 100 pages for each. We also performed a data-cleaning process on these texts to prepare them for further analysis.      
+
+Firstly, we used the classic eight cleaning steps. It includes simple transforms, conversion to lowercase, removing numbers, removing punctuation, removing English stop words, removing other unique stop words, stripping whitespace, and stemming. Since movie scripts contain many character names and our subsequent analysis is not related to specific characters in the films, we have categorized these character names, along with some additional script-specific words that are meaningless to the plot development, as special stop words and remove them. We also noticed that movie scripts often use EXT. (Exterior) and INT. (Interior) to indicate the context for visualization. Each occurrence of EXT. or INT. signals the beginning of a new scene, which effectively marks the transition to a new film segment. Therefore, we used these markers to divide the three movies into chapters. As a result, The Lion King was divided into 53 chapters, Up into 182 chapters, and Zootopia into 80 chapters.     
+
+
+**This is my team's report for the** [Disney](/project/STATS133_Project_Report.pdf)
+
+
