@@ -13,7 +13,7 @@ about:
     - icon: inbox-fill
       text: Email
       url: "mailto:gagacaow@gmail.com"
-    - text: Latex Resume
+    - text: Resume
       url: "resume.pdf"
 ---
 
